@@ -1,0 +1,81 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jun 26, 2025, 1:28:03 AM
+    Author     : Admin
+*/
+
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Kumbh Sans', sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+}
+.layout{
+    display: flex;
+    height: calc(100vh-72px);
+}
+
+.sidebar{
+    width: 220px;
+    height: 80vh;
+    background: #ffffff;
+    padding: 30px 20px;
+    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.top-bar{
+    background-color: #234C45;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+}
+
+.top-bar span{
+    font-weight: bold;
+    color: white;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.logout-btn{
+    width: 100%;
+    background: #234C45;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.logout-btn:hover {
+    background-color: #123732;
+}
+
+.menu button{
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    background-color: transparent;
+    border: none;
+    text-align: left;
+    font-size: 16px;
+    cursor: pointer;
+    color: #333;
+    border-radius: 8px;
+    transition: background-color 0.2;
+}
+
+.menu button:hover,
+.menu button.active {
+    background-color: #cfe3de;
+    color: #234C45;
+}

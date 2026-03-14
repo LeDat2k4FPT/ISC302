@@ -1,0 +1,278 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
+*/
+/* 
+    Created on : Jun 26, 2025, 9:49:19 PM
+    Author     : NhatAnh
+*/
+
+/* === RESET & BASE === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Kumbh Sans', sans-serif;
+    background-color: #f9f9f9;
+    color: #222;
+}
+
+/* === HEADER === */
+.header {
+    padding: 10px 40px;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header img {
+    height: 60px;
+    cursor: pointer;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #000;
+    font-weight: 500;
+}
+.cart-icon {
+    position: relative;
+    display: inline-block;
+    font-size: 20px;
+    color: #000;
+    margin-left: 15px;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background-color: #e53935;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.user-dropdown {
+    position: relative;
+}
+
+.user-name {
+    cursor: pointer;
+    font-weight: bold;
+    padding: 10px;
+    color: #000;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    border-radius: 4px;
+    z-index: 1000;
+    min-width: 150px;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px 16px;
+    text-decoration: none;
+    color: black;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f1f1f1;
+}
+
+/* === MAIN LAYOUT === */
+.layout {
+    padding: 40px;
+}
+
+.breadcrumb {
+    margin-bottom: 20px;
+}
+
+.back-button.styled-button {
+    display: inline-block;
+    margin-bottom: 15px;
+    padding: 8px 16px;
+    background-color: #234C45;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.back-button.styled-button:hover {
+    background-color: #28a745;
+}
+
+/* === PRODUCT SECTION === */
+.product-section {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 40px;
+    align-items: start;
+    margin-bottom: 40px;
+}
+.product-image img {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    display: block;
+    margin: 0 auto;
+}
+.product-info {
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+.product-info h1 {
+    font-size: 26px;
+    margin-bottom: 15px;
+}
+.product-info .price {
+    color: #d32f2f;
+    font-size: 22px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+.select-group {
+    margin-bottom: 20px;
+}
+.select-group label {
+    font-weight: 500;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.option-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.option-btn {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    background: #E7F0FB;
+    cursor: pointer;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+.option-btn:hover,
+.option-btn.active {
+    background: #195181;
+    color: white;
+    border-color: #195181;
+}
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.quantity-controls button {
+    width: 32px;
+    height: 32px;
+    background: #ccc;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 6px;
+}
+.quantity-number {
+    width: 40px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+}
+.add-to-cart {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+.add-to-cart button,
+.checkout-btn {
+    padding: 12px 24px;
+    color: white;
+    background: #849e98;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.checkout-btn:hover {
+    background-color: #234C45;
+}
+.section-box {
+    background: white;
+    padding: 24px;
+    border-radius: 10px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+}
+.section-box h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #195181;
+}
+/* === DESCRIPTION & REVIEW SECTIONS === */
+.description-section,
+.reviews-section {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+}
+
+.description-section h3,
+.reviews-section h3 {
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: #333;
+}
+
+.reviews-section .review-item {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.reviews-section .review-item:last-child {
+    border-bottom: none;
+}
+.thin-divider {
+    width: 90%;
+    height: 1px;
+    background-color: #ccc;
+    margin: 40px auto;
+}
+
+/* === ERROR MESSAGES === */
+#size-error, #color-error {
+    color: red;
+    font-size: 14px;
+    margin-top: 4px;
+    display: none;
+}

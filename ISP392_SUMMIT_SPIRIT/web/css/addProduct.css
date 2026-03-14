@@ -1,0 +1,94 @@
+body {
+    font-family: 'Kumbh Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+.product-form-wrapper {
+    max-width: 850px;
+    margin: 30px auto;
+    background-color: #fefefe;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    font-family: 'Kumbh Sans', sans-serif;
+}
+
+.product-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.product-header h2 {
+    color: #234C45;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.btn-add {
+    background-color: #38a169;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.btn-add:hover {
+    background-color: #2f855a;
+}
+
+form label {
+    display: block;
+    margin-top: 16px;
+    font-weight: 500;
+    color: #333;
+}
+
+form input[type="text"],
+form input[type="number"],
+form textarea,
+form select {
+    width: 100%;
+    padding: 10px 14px;
+    margin-top: 6px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: #fff;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.form-row > div {
+    flex: 1;
+}
+
+.submit-btn {
+    margin-top: 25px;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #234C45;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.submit-btn:hover {
+    background-color: #1a3b35;
+}

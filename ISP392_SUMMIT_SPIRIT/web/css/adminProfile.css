@@ -1,0 +1,125 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jul 25, 2025, 1:32:29 AM
+    Author     : Admin
+*/
+
+body {
+    font-family: 'Kumbh Sans', sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+.main-content {
+    padding: 50px 80px;
+}
+
+.back-btn {
+    background-color: transparent;
+    border: none;
+    color: #555;
+    font-size: 16px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.profile-form {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #234C45;
+}
+
+.username {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 25px;
+    color: #666;
+}
+
+.form-label {
+    font-weight: 600;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 15px;
+}
+
+.input-icon {
+    position: relative;
+}
+
+.input-icon i {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #aaa;
+}
+
+.input-icon input {
+    padding-left: 35px;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.btn-outline {
+    border: 1px solid #ccc;
+    background: transparent;
+    color: #333;
+    padding: 8px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.btn-outline:hover {
+    background-color: #eee;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    padding: 8px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.btn-primary {
+    background-color: #234C45;
+    color: white;
+    padding: 8px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.btn-primary:hover {
+    background-color: #1b3936;
+}

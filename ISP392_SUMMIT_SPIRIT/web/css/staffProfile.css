@@ -1,0 +1,155 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
+*/
+/* 
+    Created on : Jul 25, 2025, 12:14:17 AM
+    Author     : NhatAnh
+*/
+
+/* Font & Body setup */
+body {
+    font-family: 'Kumbh Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Main full width layout */
+.main-content {
+    flex: 1;
+    padding: 40px 60px;
+    background-color: #fff;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Profile Form */
+.profile-form {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.profile-form .title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.profile-form .username {
+    font-size: 28px;
+    font-weight: bold;
+    color: #21412e;
+    margin: 10px 0 30px;
+}
+
+/* Form Elements */
+.form-label {
+    font-weight: 600;
+    margin-top: 15px;
+}
+.form-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    background-color: white;
+    box-sizing: border-box;
+}
+.input-icon {
+    position: relative;
+}
+.input-icon i {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+    color: #6c757d;
+    font-size: 16px;
+    pointer-events: none;
+}
+.input-icon input {
+    padding-left: 40px;
+    height: 45px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: white;
+}
+.error {
+    color: red;
+    font-size: 13px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+/* Buttons Group */
+.btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 15px;
+    padding-top: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    font-weight: 500;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.btn-outline {
+    border: 1px solid #ccc;
+    background: white;
+}
+.btn-outline:hover {
+    background-color: #eee;
+}
+
+.btn-primary,
+.btn-secondary {
+    background-color: #849e98;
+    color: white;
+}
+.btn-primary:hover,
+.btn-secondary:hover {
+    background-color: #234C45;
+}
+
+.back-btn {
+    display: inline-block;
+    background: #234C45;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 20px;
+    text-decoration: none;
+}
+.back-btn:hover {
+    background: #28a745;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .main-content {
+        padding: 20px;
+    }
+    .profile-form .username {
+        font-size: 22px;
+    }
+    .btn-group {
+        justify-content: center;
+    }
+}

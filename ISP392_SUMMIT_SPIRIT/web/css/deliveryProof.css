@@ -1,0 +1,118 @@
+.proof-container {
+    font-family: 'Kumbh Sans', sans-serif;
+    padding: 40px 20px;
+    color: #234C45;
+    background-color: #f7f9f8;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 28px;
+    color: #234C45;
+}
+
+.grid-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 24px;
+}
+
+.proof-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease;
+}
+
+.proof-card:hover {
+    transform: translateY(-4px);
+}
+
+.order-meta h3 {
+    color: #234C45;
+    margin-bottom: 8px;
+}
+
+.order-meta p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.capture-zone {
+    margin: 10px 0;
+    position: relative;
+}
+
+video {
+    width: 100%;
+    border-radius: 8px;
+    border: 2px solid #d0e7e0;
+}
+
+.preview-img {
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 8px;
+}
+
+.capture-btn {
+    margin-top: 10px;
+    background-color: #234C45;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.capture-btn:hover {
+    background-color: #2f645b;
+}
+
+.proof-form {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.proof-form input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.submit-btn {
+    background-color: #198754;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #157347;
+}
+
+.no-data {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 18px;
+    color: #888;
+    font-style: italic;
+}
+video {
+    display: none;
+    width: 100%;
+    max-height: 200px;
+    border-radius: 8px;
+}

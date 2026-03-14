@@ -1,0 +1,217 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
+*/
+/* 
+    Created on : Jul 8, 2025, 11:05:41 AM
+    Author     : NhatAnh
+*/
+
+body {
+    font-family: 'Kumbh Sans', sans-serif;
+    margin: 0;
+    background-color: #f9f9f9;
+}
+.header {
+    padding: 10px 40px;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header img {
+    height: 60px;
+    cursor: pointer;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #000;
+    font-weight: 500;
+}
+.cart-icon {
+    position: relative;
+    display: inline-block;
+    font-size: 20px;
+    color: #000;
+    margin-left: 15px;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background-color: #e53935;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.user-dropdown {
+    position: relative;
+}
+
+.user-name {
+    cursor: pointer;
+    font-weight: bold;
+    padding: 10px;
+    color: #000;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    border-radius: 4px;
+    z-index: 1000;
+    min-width: 150px;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px 16px;
+    text-decoration: none;
+    color: black;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f1f1f1;
+}
+.main-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px;
+    gap: 20px;
+}
+.cart-section {
+    flex: 3;
+}
+.summary-section {
+    flex: 1;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    height: fit-content;
+    margin-top: 105px;
+}
+.cart-item {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding: 20px 0;
+    background-color: #fff;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.cart-item img {
+    width: 100px;
+}
+.cart-info {
+    flex: 1;
+}
+.cart-info h3 {
+    margin: 0;
+    font-size: 18px;
+}
+.price {
+    font-weight: bold;
+    min-width: 120px;
+    text-align: right;
+}
+.quantity-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap; /* Giúp mobile tự xuống dòng nếu thiếu chỗ */
+}
+
+.quantity-box button {
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    background-color: #eee;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.quantity-box button:hover {
+    background-color: #ccc;
+}
+
+.quantity-box input[type="number"] {
+    width: 60px;
+    height: 32px;
+    text-align: center;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+.quantity-box .delete-link {
+    margin-left: auto;
+    color: #000;
+    font-size: 18px;
+    transition: color 0.2s;
+}
+
+.quantity-box .delete-link:hover {
+    color: #b71c1c;
+}
+
+.delete-link {
+    font-size: 18px;
+    color: #888;
+    text-decoration: none;
+    margin-left: 10px;
+}
+.summary-line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 16px;
+}
+.total-line {
+    font-weight: bold;
+    font-size: 18px;
+    color: #222;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+}
+.btn-continue {
+    width: 100%;
+    padding: 15px;
+    background-color: #849e98;
+    color: white;
+    border: none;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+.btn-continue:hover {
+    background-color: #234C45;
+}
+.empty-cart {
+    text-align: center;
+    font-size: 20px;
+    padding: 80px 0;
+}

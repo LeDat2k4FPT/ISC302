@@ -1,0 +1,133 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Kumbh Sans', sans-serif;
+    background-color: #f5f5f5;
+}
+.top-bar {
+    height: 50px;
+    background-color: #38a169; /* xanh lá */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+
+/* Sidebar */
+.sidebar {
+    width: 210px;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Push logout xuống */
+    padding: 40px 20px; /* Tạo khoảng cách trên dưới */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 20px;
+    gap: 10px;
+    margin-bottom: 40px;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.nav-item:hover,
+.nav-item.active {
+    background-color: #e1e8e6;
+    color: #234C45;
+}
+
+.logout-form {
+    margin-top: auto;
+}
+
+.logout-btn {
+    background-color: #234C45;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.logout-btn:hover {
+    background-color: #2F5D53;
+}
+
+
+/* Content */
+.content {
+    flex: 1;
+    padding: 30px;
+}
+
+.top-bar-custom {
+    height: 80px;
+    background-color: #234C45; /* xanh lá đậm */
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    font-weight: bold;
+    font-size: 18px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+/* Đẩy content xuống dưới top bar */
+.dashboard-container {
+    display: flex;
+    padding-top: 80px; /* đúng bằng chiều cao của .top-bar-custom */
+    height: auto;
+    min-height: 100vh;
+}
+
+/* Profile icon */
+.user-icon-link {
+    color: white;
+    font-size: 24px;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.user-icon-link:hover {
+    color: #ccc;
+}
+.history-card {
+    padding: 16px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    background-color: #fff;
+}

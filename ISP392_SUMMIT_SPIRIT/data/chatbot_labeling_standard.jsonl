@@ -1,0 +1,83 @@
+# Chatbot Labeling Standard
+
+## Technical Intents
+- SMALL_TALK
+- SEARCH_PRODUCT
+- CHECK_STOCK
+- UNSUPPORTED_PRODUCT
+- OUT_OF_SCOPE
+
+## Business Groups
+- PRODUCT_INFO
+- PRICE_PROMOTION
+- STOCK_CHECK
+- SIZE_CONSULTING
+- SUGGESTION
+- COMPARISON
+- ORDER_GUIDE
+
+## Categories
+- Pants
+- Shirts
+- Backpacks
+- Camping Tools
+- Tents
+- Hats
+- Cooking Equipment
+
+## Colors
+- Black
+- Red
+- Blue
+
+## Sizes
+- S
+- M
+- L
+- small
+- big
+
+## Feature Tags
+- UV
+- quick-dry
+- waterproof
+- trekking
+- lightweight
+
+## Category Mapping
+- áo, áo sơ mi, áo khoác, shirt -> Shirts
+- quần, quần dài, quần short, pants -> Pants
+- balo, ba lô, backpack -> Backpacks
+- dao, dụng cụ, đồ camping -> Camping Tools
+- lều, trại, tent -> Tents
+- mũ, nón, hat -> Hats
+- bếp, stove, grill -> Cooking Equipment
+
+## Color Mapping
+- đen, màu đen, black -> Black
+- đỏ, màu đỏ, red -> Red
+- xanh, xanh dương, blue -> Blue
+
+## Size Mapping
+- size s, s -> S
+- size m, m -> M
+- size l, l -> L
+- size small, small -> small
+- size big, big -> big
+
+## Feature Mapping
+- chống nắng, chống uv, uv, uv protection, sun protection, omni-shade -> UV
+- nhanh khô, quick dry, quick-dry, omni-wick -> quick-dry
+- chống nước, waterproof, water resistant -> waterproof
+- trekking, leo núi, hiking, outdoor, camping, mountaineering -> trekking
+- siêu nhẹ, lightweight, ultralight -> lightweight
+
+## Database Reality Notes
+- Pants strongly match: waterproof, quick-dry, trekking, lightweight, UV
+- Shirts strongly match: quick-dry, UV
+- Backpacks strongly match: lightweight, hiking, mountaineering
+- Tents strongly match: trekking, camping, outdoor
+- Hats strongly match: UV, quick-dry
+- Cooking Equipment strongly match: camping, outdoor, stove, grill
+- Shirts currently do not strongly support waterproof queries
+- Tents and Camping Tools usually do not use color/size filters in current DB

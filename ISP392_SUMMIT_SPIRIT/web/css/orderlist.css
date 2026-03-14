@@ -1,0 +1,152 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jul 9, 2025, 12:49:37 AM
+    Author     : Admin
+*/
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Kumbh Sans', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.order-section {
+    background: #ffffff;
+    padding: 24px;
+    margin: 40px auto;
+    width: 90%;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* Header */
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.order-header h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #234C45;
+}
+
+/* Search form */
+form.search-form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+    gap: 10px;
+}
+
+form.search-form input[type="text"] {
+    padding: 10px 16px;
+    width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+form.search-form button {
+    padding: 10px 16px;
+    background-color: #234C45;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+form.search-form button:hover {
+    background-color: #28a745;
+}
+
+/* Table */
+.order-table-wrapper {
+    overflow-x: auto;
+}
+
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+}
+
+.order-table th, .order-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.order-table th {
+    background-color: #195181;
+    color: white;
+    font-weight: 500;
+}
+
+.order-table tr:nth-child(even) {
+    background-color: #E7F0FB;
+}
+
+.order-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Select, button in rows */
+td form select {
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+td form button {
+    padding: 6px 12px;
+    background-color: #849e98;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+td button{
+    padding: 6px 12px;
+    background-color: #234C45;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+td button:hover{
+    background-color: #28a745;
+}
+td form button:hover {
+    background-color: #234C45;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #842029;
+    border: 1px solid #f5c2c7;
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+.view-btn{
+    text-decoration: none;
+    padding: 6px 12px;
+    background-color: #234C45;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+.view-btn:hover{
+    background-color: #28a745
+}
