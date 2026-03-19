@@ -45,7 +45,7 @@
                     <option value="">All Statuses</option>
                     <option value="Processing" <%= "Processing".equals(request.getParameter("status")) ? "selected" : "" %>>Processing</option>
                     <option value="Packed" <%= "Packed".equals(request.getParameter("status")) ? "selected" : "" %>>Packed</option>
-                    <option value="Shipped" <%= "Shipped".equals(request.getParameter("status")) ? "selected" : "" %>>Shipped</option>
+                    <option value="Shipped" <%= "Shipped".equals(request.getParameter("status")) ? "selected" : "" %>>Shipping</option>
                     <option value="Delivered" <%= "Delivered".equals(request.getParameter("status")) ? "selected" : "" %>>Delivered</option>
                     <option value="Cancelled" <%= "Cancelled".equals(request.getParameter("status")) ? "selected" : "" %>>Cancelled</option>
                 </select>

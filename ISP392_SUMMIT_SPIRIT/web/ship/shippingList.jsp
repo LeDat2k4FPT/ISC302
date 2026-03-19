@@ -50,7 +50,7 @@
                         <td><%= info != null ? info.getPhone() : "None" %></td>
                         <td>
                             <% if (info != null) { %>
-                            <%= info.getAddress() %>, <%= info.getDistrict() %>, <%= info.getCity() %>, <%= info.getCountry() %>
+                            <%= info.getAddress() %>, <%= info.getDistrict() %>, <%= info.getCity() %>
                             <% } else { %>
                             None
                             <% } %>

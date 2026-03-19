@@ -15,6 +15,7 @@ public class ManageVoucherController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             VoucherDAO dao = new VoucherDAO();
+            dao.deactivateExpiredVouchers();
             List<VoucherDTO> vouchers = dao.getActiveVouchers();
             request.setAttribute("vouchers", vouchers);
             String msg = request.getParameter("msg");

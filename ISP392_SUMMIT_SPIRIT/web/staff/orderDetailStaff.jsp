@@ -59,7 +59,7 @@
                     <div><strong>Email:</strong> <%= userInfo.getEmail() %></div>
                     <div><strong>Phone:</strong> <%= userInfo.getPhone() %></div>
                     <div><strong>Address:</strong> <%= userInfo.getAddress() %>, <%= userInfo.getDistrict() %>,
-                        <%= userInfo.getCity() %>, <%= userInfo.getCountry() %></div>
+                        <%= userInfo.getCity() %></div>
                         <% } else { %>
                     <div><strong>Customer:</strong> <i>Not provided yet</i></div>
                     <div><strong>Email:</strong> <i>Not provided yet</i></div>
