@@ -214,9 +214,9 @@
                         double price = originalPrice;
                         boolean isDiscounted = p.isFromSaleOff();
 
-                        if (isDiscounted) {
-                            price = Math.round(originalPrice * 0.8);
-                        }
+//                        if (isDiscounted) {
+//                            price = Math.round(originalPrice * 0.8);
+//                        }
 
                         double lineTotal = price * quantity;
                         total += lineTotal;
@@ -254,21 +254,24 @@
                         </div>
                     </div>
                     <div class="price">
-                        <% if (isDiscounted) {
+                        <% if (isDiscounted) {%>
 
-                                double displayedOriginal = Math.round(originalPrice * 1.25);
-                        %>
                         <span style="text-decoration: line-through; color: gray;">
-                            <%= String.format("%,.0f", displayedOriginal * quantity)%> VND
-                        </span><br>
-                        <span style="color: red; font-weight: bold;">
                             <%= String.format("%,.0f", originalPrice * quantity)%> VND
+                        </span><br>
+
+                        <span style="color: red; font-weight: bold;">
+                            <%= String.format("%,.0f", price * quantity)%> VND
                         </span>
+
                         <span style="color: red;"> (-20%)</span>
+
                         <% } else {%>
+
                         <span style="font-weight: bold;">
                             <%= String.format("%,.0f", originalPrice * quantity)%> VND
                         </span>
+
                         <% } %>
                     </div>
                 </div>
