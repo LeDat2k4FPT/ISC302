@@ -304,5 +304,6 @@
         </div>
 
         <% }%>
+        <jsp:include page="/common/chatbot.jsp" />
     </body>
 </html>

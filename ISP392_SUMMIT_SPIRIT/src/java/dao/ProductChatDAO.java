@@ -11,6 +11,22 @@ public interface ProductChatDAO {
 
     List<ChatProductResult> findProductsByFilters(ChatQuery query) throws Exception;
 
+    List<ChatProductResult> findAllProductsByFilters(ChatQuery query) throws Exception;
+
+    ChatProductResult findCheapestProduct() throws Exception;
+
+    ChatProductResult findMostExpensiveProduct() throws Exception;
+
+    ChatProductResult findBestSellingProduct() throws Exception;
+
+    ChatProductResult findCheapestProductByCategory(String category) throws Exception;
+
+    ChatProductResult findMostExpensiveProductByCategory(String category) throws Exception;
+
+    ChatProductResult findCheapestProductByKeyword(String keyword) throws Exception;
+
+    ChatProductResult findMostExpensiveProductByKeyword(String keyword) throws Exception;
+
     List<VariantStockResult> getVariantStock(int productId) throws Exception;
 
     Integer findProductIdByKeyword(String keyword) throws Exception;

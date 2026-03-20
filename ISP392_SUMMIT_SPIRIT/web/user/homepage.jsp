@@ -133,7 +133,7 @@
 
         <!-- Main Content -->
         <div class="main">
-            <h2>🔥 Top Sales</h2>
+            <h2>Top Sales</h2>
             <div class="product-list">
                 <% if (topSales != null && !topSales.isEmpty()) {
             for (ProductDTO p : topSales) { %>
@@ -180,7 +180,6 @@
         %>
         <%= message %>
 
-        <jsp:include page="/user/chatbot.jsp" />
-       
+<jsp:include page="/common/chatbot.jsp" />       
     </body>
 </html>

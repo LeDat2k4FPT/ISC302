@@ -12,6 +12,7 @@ public class IntentDetector {
         if (message == null) {
             query.setRawMessage("");
             query.setIntent(ChatIntent.OUT_OF_SCOPE);
+            query.setInStockOnly(false);
             return query;
         }
 
@@ -20,11 +21,21 @@ public class IntentDetector {
 
         query.setRawMessage(rawMessage);
 
+        if (isSmallTalk(normalized)) {
+            query.setIntent(ChatIntent.SMALL_TALK);
+            query.setInStockOnly(false);
+            return query;
+        }
+
         String productKeyword = detectProductKeyword(rawMessage);
         query.setProductKeyword(productKeyword);
 
         boolean inStockOnly = containsAny(normalized,
-                "còn hàng", "còn không", "available", "in stock", "còn size", "còn màu");
+                "còn hàng", "con hang",
+                "còn không", "con khong",
+                "available", "in stock",
+                "còn size", "con size",
+                "còn màu", "con mau");
         query.setInStockOnly(inStockOnly);
 
         String category = detectCategory(normalized);
@@ -55,6 +66,9 @@ public class IntentDetector {
     }
 
     private boolean containsAny(String text, String... keywords) {
+        if (text == null) {
+            return false;
+        }
         for (String keyword : keywords) {
             if (text.contains(keyword)) {
                 return true;
@@ -63,68 +77,77 @@ public class IntentDetector {
         return false;
     }
 
+    private boolean isSmallTalk(String text) {
+        return containsAny(text,
+                "hi", "hello", "helo", "xin chào", "xin chao", "chào", "chao",
+                "shop ơi", "shop oi", "ad ơi", "ad oi",
+                "cảm ơn", "cam on", "thanks", "thank you");
+    }
+
     private String detectCategory(String text) {
-        if (containsAny(text, "quần", "pants", "short", "shorts")) {
+        if (containsAny(text, "quần", "quan", "pants", "short", "shorts")) {
             return "Pants";
         }
-        if (containsAny(text, "áo", "shirt", "shirts", "jacket", "hoodie")) {
+        if (containsAny(text, "áo", "ao", "shirt", "shirts", "jacket", "hoodie")) {
             return "Shirts";
         }
-        if (containsAny(text, "balo", "ba lô", "backpack", "backpacks")) {
+        if (containsAny(text, "balo", "ba lô", "ba lo", "backpack", "backpacks")) {
             return "Backpacks";
         }
-        if (containsAny(text, "dao", "knife", "tool", "tools", "dụng cụ cắm trại", "camping tools")) {
+        if (containsAny(text, "dao", "knife", "tool", "tools", "dụng cụ cắm trại", "dung cu cam trai", "camping tools")) {
             return "Camping Tools";
         }
-        if (containsAny(text, "lều", "tent", "tents")) {
+        if (containsAny(text, "lều", "leu", "tent", "tents")) {
             return "Tents";
         }
-        if (containsAny(text, "nón", "mũ", "hat", "hats", "cap")) {
+        if (containsAny(text, "nón", "non", "mũ", "mu", "hat", "hats", "cap")) {
             return "Hats";
         }
-        if (containsAny(text, "bếp", "stove", "grill", "cooking", "nấu ăn")) {
+        if (containsAny(text, "bếp", "bep", "stove", "grill", "cooking", "nấu ăn", "nau an")) {
             return "Cooking Equipment";
         }
         return null;
     }
 
     private String detectColor(String text) {
-        if (containsAny(text, "đen", "black")) {
+        if (containsAny(text, "đen", "den", "black")) {
             return "Black";
         }
-        if (containsAny(text, "đỏ", "red")) {
+        if (containsAny(text, "đỏ", "do", "red")) {
             return "Red";
         }
-        if (containsAny(text, "xanh", "xanh dương", "blue")) {
+        if (containsAny(text, "xanh dương", "xanh duong", "blue")) {
             return "Blue";
         }
         return null;
     }
 
     private String detectSize(String text) {
-        Pattern pattern = Pattern.compile("\\b(s|m|l|small|big)\\b", Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(text);
-
-        if (matcher.find()) {
-            String value = matcher.group(1);
-            if ("s".equalsIgnoreCase(value)) {
-                return "S";
-            }
-            if ("m".equalsIgnoreCase(value)) {
-                return "M";
-            }
-            if ("l".equalsIgnoreCase(value)) {
-                return "L";
-            }
-            if ("small".equalsIgnoreCase(value)) {
-                return "small";
-            }
-            if ("big".equalsIgnoreCase(value)) {
-                return "big";
-            }
-        }
-        return null;
+    if (containsAny(text, "size lớn", "loại lớn", "lớn", "lon", "big")) {
+        return "big";
     }
+
+    if (containsAny(text, "size nhỏ", "loại nhỏ", "nhỏ", "nho", "small")) {
+        return "small";
+    }
+
+    Pattern pattern = Pattern.compile("\\b(s|m|l)\\b", Pattern.CASE_INSENSITIVE);
+    Matcher matcher = pattern.matcher(text);
+
+    if (matcher.find()) {
+        String value = matcher.group(1);
+        if ("s".equalsIgnoreCase(value)) {
+            return "S";
+        }
+        if ("m".equalsIgnoreCase(value)) {
+            return "M";
+        }
+        if ("l".equalsIgnoreCase(value)) {
+            return "L";
+        }
+    }
+    return null;
+}
 
     private void parsePrice(String text, ChatQuery query) {
         Pattern rangePattern = Pattern.compile("(?:từ\\s*)?(\\d+(?:\\.\\d+)?)\\s*(k|triệu)?\\s*(?:đến|-|to)\\s*(\\d+(?:\\.\\d+)?)\\s*(k|triệu)?");
@@ -137,7 +160,7 @@ public class IntentDetector {
             return;
         }
 
-        Pattern maxPattern = Pattern.compile("(dưới|rẻ hơn|không quá)\\s*(\\d+(?:\\.\\d+)?)\\s*(k|triệu)?");
+        Pattern maxPattern = Pattern.compile("(dưới|duoi|rẻ hơn|re hon|không quá|khong qua)\\s*(\\d+(?:\\.\\d+)?)\\s*(k|triệu)?");
         Matcher maxMatcher = maxPattern.matcher(text);
         if (maxMatcher.find()) {
             double max = convertPrice(maxMatcher.group(2), maxMatcher.group(3));
@@ -145,7 +168,7 @@ public class IntentDetector {
             return;
         }
 
-        Pattern minPattern = Pattern.compile("(trên|hơn|từ)\\s*(\\d+(?:\\.\\d+)?)\\s*(k|triệu)?");
+        Pattern minPattern = Pattern.compile("(trên|tren|hơn|hon|từ|tu)\\s*(\\d+(?:\\.\\d+)?)\\s*(k|triệu)?");
         Matcher minMatcher = minPattern.matcher(text);
         if (minMatcher.find()) {
             double min = convertPrice(minMatcher.group(2), minMatcher.group(3));
@@ -172,19 +195,19 @@ public class IntentDetector {
     }
 
     private String detectDescriptionKeyword(String text) {
-        if (containsAny(text, "nhanh khô", "quick dry", "quick-dry")) {
+        if (containsAny(text, "nhanh khô", "nhanh kho", "quick dry", "quick-dry")) {
             return "quick-dry";
         }
-        if (containsAny(text, "chống nắng", "chống uv", "uv", "sun protection")) {
+        if (containsAny(text, "chống nắng", "chong nang", "chống uv", "chong uv", "uv", "sun protection")) {
             return "UV";
         }
-        if (containsAny(text, "chống nước", "waterproof")) {
+        if (containsAny(text, "chống nước", "chong nuoc", "waterproof")) {
             return "waterproof";
         }
-        if (containsAny(text, "nhẹ", "siêu nhẹ", "lightweight", "ultra-light")) {
+        if (containsAny(text, "nhẹ", "nhe", "siêu nhẹ", "sieu nhe", "lightweight", "ultra-light", "ultralight")) {
             return "lightweight";
         }
-        if (containsAny(text, "trekking", "leo núi", "outdoor", "hiking", "climbing")) {
+        if (containsAny(text, "trekking", "leo núi", "leo nui", "outdoor", "hiking", "climbing", "camping")) {
             return "trekking";
         }
         return null;
@@ -200,6 +223,11 @@ public class IntentDetector {
                 return token;
             }
         }
+
+        if (rawMessage.toLowerCase().contains("jacket")) {
+            return "jacket";
+        }
+
         return null;
     }
 
@@ -207,24 +235,17 @@ public class IntentDetector {
         if (query.isInStockOnly()) {
             return ChatIntent.CHECK_STOCK;
         }
-        if (query.getProductKeyword() != null && !query.getProductKeyword().isEmpty()) {
-            return ChatIntent.SEARCH_BY_NAME;
+
+        if (query.getProductKeyword() != null
+                || query.getCategory() != null
+                || query.getColor() != null
+                || query.getSize() != null
+                || query.getMinPrice() != null
+                || query.getMaxPrice() != null
+                || query.getDescriptionKeyword() != null) {
+            return ChatIntent.SEARCH_PRODUCT;
         }
-        if (query.getMinPrice() != null || query.getMaxPrice() != null) {
-            return ChatIntent.SEARCH_BY_PRICE;
-        }
-        if (query.getColor() != null) {
-            return ChatIntent.SEARCH_BY_COLOR;
-        }
-        if (query.getSize() != null) {
-            return ChatIntent.SEARCH_BY_SIZE;
-        }
-        if (query.getCategory() != null) {
-            return ChatIntent.SEARCH_BY_CATEGORY;
-        }
-        if (query.getDescriptionKeyword() != null) {
-            return ChatIntent.RECOMMEND_BY_DESCRIPTION;
-        }
+
         return ChatIntent.OUT_OF_SCOPE;
     }
 }

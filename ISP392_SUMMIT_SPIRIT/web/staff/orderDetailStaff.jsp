@@ -47,7 +47,7 @@
         <div class="container">
             <% if (order == null) { %>
             <div class="alert">
-                <h2>🚫 Order Not Found!</h2>
+                <h2>Order Not Found!</h2>
                 <p>No order exists with ID: <%= orderID %></p>
             </div>
             <% } else { %>
@@ -96,7 +96,7 @@
                 </div>
             </div>
 
-            <h3>📦 Products</h3>
+            <h3>Products</h3>
             <div class="products-list">
                 <% for (OrderDetailDTO od : orderDetails) { %>
                 <div class="product-box">

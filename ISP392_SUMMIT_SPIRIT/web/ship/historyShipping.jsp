@@ -14,14 +14,14 @@
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/historyShipping.css" />
 
 <div class="history-container">
-    <h2>📜 Delivery History - Giao hàng thành công</h2>
+    <h2>Delivery History </h2>
 
     <% if (deliveredList != null && !deliveredList.isEmpty()) { %>
         <% for (ShippingDTO item : deliveredList) { %>
             <div class="history-card">
                 <!-- Cột trái: Thông tin -->
                 <div class="history-info">
-                    <p><span class="label">🚚 Order ID:</span> <%= item.getOrderID() %></p>
+                    <p><span class="label">Order ID:</span> <%= item.getOrderID() %></p>
                     <p><span class="label">Delivered At:</span> <%= item.getDeliveryTime() %></p>
                     <p><span class="label">Note:</span> <%= item.getNote() != null ? item.getNote() : "Không có" %></p>
                 </div>

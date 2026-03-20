@@ -410,16 +410,16 @@ CREATE TABLE Voucher (
 );
 
 INSERT INTO Voucher ( VoucherCode, DiscountValue, ExpiryDate , Status) VALUES
-( 'FANFAN10', 10.0, '2025-12-31', 'Active'),
-( 'TREK5OFF', 5.0, '2025-09-30', 'Active'),
+( 'FANFAN10', 10.0, '2026-12-31', 'Active'),
+( 'TREK5OFF', 5.0, '2026-09-30', 'Active'),
 ( 'NEWCUSTOMER', 15.0, '2026-01-01', 'Active'),
 ( 'FLASHSALE20', 20.0, '2025-06-20', 'Inactive'),
-('CAMPING15', 15.0, '2025-12-15', 'Active'),
-( 'HIKER2025', 12.5, '2025-11-01', 'Active'),
-( 'WELCOMEBACK', 8.0, '2025-07-15', 'Active'),
-( 'MOUNTAINLOVE', 18.0, '2025-08-31', 'Active'),
+('CAMPING15', 15.0, '2026-12-15', 'Active'),
+( 'HIKER2025', 12.5, '2026-11-01', 'Active'),
+( 'WELCOMEBACK', 8.0, '2026-07-15', 'Active'),
+( 'MOUNTAINLOVE', 18.0, '2026-08-31', 'Active'),
 ('SPRINGDEAL', 7.5, '2026-03-31', 'Active'),
-('LIMITED50', 50.0, '2025-06-18', 'Inactive');
+('LIMITED50', 50.0, '2026-06-18', 'Inactive');
 
 
 -- ORDER

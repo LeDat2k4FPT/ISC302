@@ -13,14 +13,19 @@ import java.util.List;
 
 public class AIResponseService {
 
-    private static final String API_KEY = "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";
+    private static final String API_KEY = "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";
     private static final String GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
     private static final String MODEL = "llama-3.3-70b-versatile";
 
     private final Gson gson = new Gson();
+    private final HttpClient client = HttpClient.newHttpClient();
 
     public String generateReply(String userMessage, List<ChatProductResult> products)
             throws IOException, InterruptedException {
+
+        validateApiKey();
+
+        String prompt = buildPrompt(userMessage, products);
 
         JsonObject payload = new JsonObject();
         payload.addProperty("model", MODEL);
@@ -42,17 +47,11 @@ public class AIResponseService {
                 + "When possible, mention product name and price. "
                 + "Do not repeat the full product list in the text because the UI already shows the products below. "
                 + "Do not mention any information that is missing from the database results.");
-
         messages.add(systemMsg);
 
         JsonObject userMsg = new JsonObject();
         userMsg.addProperty("role", "user");
-        userMsg.addProperty("content",
-                "Câu hỏi người dùng: " + userMessage + "\n\n"
-                + "Dữ liệu sản phẩm từ database:\n"
-                + gson.toJson(products) + "\n\n"
-                + "Hãy trả lời tự nhiên bằng tiếng Việt, ngắn gọn, chỉ dựa trên dữ liệu database ở trên.");
-
+        userMsg.addProperty("content", prompt);
         messages.add(userMsg);
 
         payload.add("messages", messages);
@@ -64,7 +63,6 @@ public class AIResponseService {
                 .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(payload)))
                 .build();
 
-        HttpClient client = HttpClient.newHttpClient();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         if (response.statusCode() < 200 || response.statusCode() >= 300) {
@@ -72,10 +70,32 @@ public class AIResponseService {
         }
 
         JsonObject root = gson.fromJson(response.body(), JsonObject.class);
-        return root.getAsJsonArray("choices")
+        String text = root.getAsJsonArray("choices")
                 .get(0).getAsJsonObject()
                 .getAsJsonObject("message")
                 .get("content").getAsString()
                 .trim();
+
+        if (text.isEmpty()) {
+            return "Xin lỗi, tôi chưa thể tạo câu trả lời lúc này.";
+        }
+
+        return text;
+    }
+
+    private void validateApiKey() {
+        if (API_KEY == null || API_KEY.trim().isEmpty()) {
+            throw new IllegalStateException("Missing GROQ_API_KEY.");
+        }
+    }
+
+    private String buildPrompt(String userMessage, List<ChatProductResult> products) {
+        String safeMessage = userMessage == null ? "" : userMessage.trim();
+        String productJson = gson.toJson(products);
+
+        return "Câu hỏi người dùng: " + safeMessage + "\n\n"
+                + "Dữ liệu sản phẩm từ database:\n"
+                + productJson + "\n\n"
+                + "Hãy trả lời tự nhiên bằng tiếng Việt, ngắn gọn, chỉ dựa trên dữ liệu database ở trên.";
     }
 }

@@ -177,7 +177,7 @@
             <div class="container">
                 <div class="form-section">
                     <h3>Shipping Address</h3>
-                    <input type="text" name="country" placeholder="Country/Region" value="<%= country %>" required>
+<!--                    <input type="text" name="country" placeholder="Country/Region" value="<%= country %>" required>-->
                     <div class="row">
                         <input type="text" name="fullname" placeholder="Full Name" value="<%= fullname %>" required>
                         <input type="text" name="phone" placeholder="Phone" value="<%= phone %>" required>
@@ -188,7 +188,7 @@
                     <input type="text" name="address" placeholder="Address" value="<%= address %>" required>
                     <div class="row">
                         <input type="text" name="district" placeholder="District" value="<%= district %>" required>
-                        <input type="text" name="city" placeholder="City" value="<%= city %>" required>
+                        <input type="text" name="city" value="Ho Chi Minh" readonly>
                     </div>
 
                     <% if (!hasSaleOffProduct) { %>

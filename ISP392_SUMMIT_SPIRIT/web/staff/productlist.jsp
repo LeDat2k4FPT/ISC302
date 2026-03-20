@@ -47,7 +47,7 @@
 
         <!-- 👇 Đây là phần đã chỉnh đúng -->
         <div class="product-header">
-            <h2>📦 Product</h2>
+            <h2>Product</h2>
             <a href="<%=request.getContextPath()%>/staff/staffDashboard.jsp?page=addProduct.jsp" class="btn-add-product">
                 <i class="bi bi-plus-circle"></i> Add Product
             </a>

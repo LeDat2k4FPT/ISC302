@@ -24,7 +24,7 @@
 
 <div class="order-section">
     <div class="order-container">
-        <h2>📦 Orders Waiting for Shipping</h2>
+        <h2>Orders Waiting for Shipping</h2>
 
         <% if (packedOrders != null && !packedOrders.isEmpty()) { %>
         <div class="table-wrapper">
@@ -69,7 +69,7 @@
             </table>
         </div>
         <% } else { %>
-        <p class="no-order-msg">🚫 No packed orders available.</p>
+        <p class="no-order-msg">No packed orders available.</p>
         <% } %>
     </div>
 </div>

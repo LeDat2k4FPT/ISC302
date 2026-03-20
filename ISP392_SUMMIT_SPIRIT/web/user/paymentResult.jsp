@@ -73,7 +73,7 @@
                         <i class="fas fa-check-circle"></i>
                     </p>
                     <p class="text-success">
-                        🌄 Thank you for shopping at Summit Spirit!
+                         Thank you for shopping at Summit Spirit!
                     </p>
                 </div>
                 <% if (transactionId != null) {%>

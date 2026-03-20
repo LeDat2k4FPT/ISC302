@@ -29,7 +29,7 @@
     boolean isAllCategory = "all".equals(selectedCategory);
 %>
 
-<h2 class="text-center mb-4">📈 Revenue Analytics</h2>
+<h2 class="text-center mb-4">Revenue Analytics</h2>
 
 <!-- Filter Form -->
 <form action="${pageContext.request.contextPath}/ViewRevenueController" method="get" class="row g-3 mb-4">

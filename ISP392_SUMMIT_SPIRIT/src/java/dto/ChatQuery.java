@@ -11,6 +11,8 @@ public class ChatQuery {
     private Double maxPrice;
     private String descriptionKeyword;
     private boolean inStockOnly;
+    private Integer heightCm;
+    private Integer weightKg;
 
     public ChatQuery() {
     }
@@ -93,5 +95,21 @@ public class ChatQuery {
 
     public void setInStockOnly(boolean inStockOnly) {
         this.inStockOnly = inStockOnly;
+    }
+
+    public Integer getHeightCm() {
+        return heightCm;
+    }
+
+    public void setHeightCm(Integer heightCm) {
+        this.heightCm = heightCm;
+    }
+
+    public Integer getWeightKg() {
+        return weightKg;
+    }
+
+    public void setWeightKg(Integer weightKg) {
+        this.weightKg = weightKg;
     }
 }

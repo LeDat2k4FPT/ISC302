@@ -20,7 +20,7 @@
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/deliveryProof.css" />
 
 <div class="proof-container">
-    <h2>📦 Delivery Confirmation Panel</h2>
+    <h2>Delivery Confirmation Panel</h2>
 
     <% if (shippedOrders != null && !shippedOrders.isEmpty()) { %>
     <div class="grid-wrapper">

@@ -60,7 +60,7 @@
             </div>
         </div>
 
-        <h1>🎉 20% Discounted Products 🎉</h1>
+        <h1>20% Discounted Products</h1>
 
         <% if (saleProducts != null && !saleProducts.isEmpty()) { %>
         <div class="product-grid">
@@ -82,5 +82,6 @@
         <% } else { %>
         <p style="text-align:center;">No discounted products available.</p>
         <% } %>
+        <jsp:include page="/common/chatbot.jsp" />
     </body>
 </html>

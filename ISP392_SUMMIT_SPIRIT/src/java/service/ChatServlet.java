@@ -64,16 +64,16 @@ public class ChatServlet extends HttpServlet {
                 chatResponse.setSuccess(false);
                 chatResponse.setMessage("Bạn cần đăng nhập để sử dụng chatbot.");
                 chatResponse.setProducts(new ArrayList<>());
-                response.getWriter().write(gson.toJson(chatResponse));
+                writeJson(response, chatResponse);
                 return;
             }
 
             StringBuilder jsonBuilder = new StringBuilder();
-            try (BufferedReader reader = request.getReader()) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    jsonBuilder.append(line);
-                }
+            BufferedReader reader = request.getReader();
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                jsonBuilder.append(line);
             }
 
             ChatRequest chatRequest = gson.fromJson(jsonBuilder.toString(), ChatRequest.class);
@@ -82,7 +82,7 @@ public class ChatServlet extends HttpServlet {
                 chatResponse.setSuccess(false);
                 chatResponse.setMessage("Nội dung câu hỏi không hợp lệ.");
                 chatResponse.setProducts(new ArrayList<>());
-                response.getWriter().write(gson.toJson(chatResponse));
+                writeJson(response, chatResponse);
                 return;
             }
 
@@ -92,7 +92,7 @@ public class ChatServlet extends HttpServlet {
                 chatResponse.setSuccess(false);
                 chatResponse.setMessage("Nội dung câu hỏi không hợp lệ.");
                 chatResponse.setProducts(new ArrayList<>());
-                response.getWriter().write(gson.toJson(chatResponse));
+                writeJson(response, chatResponse);
                 return;
             }
 
@@ -100,7 +100,7 @@ public class ChatServlet extends HttpServlet {
                 chatResponse.setSuccess(true);
                 chatResponse.setMessage(getWelcomeMessage(session));
                 chatResponse.setProducts(new ArrayList<>());
-                response.getWriter().write(gson.toJson(chatResponse));
+                writeJson(response, chatResponse);
                 return;
             }
 
@@ -113,6 +113,10 @@ public class ChatServlet extends HttpServlet {
             chatResponse.setProducts(new ArrayList<>());
         }
 
+        writeJson(response, chatResponse);
+    }
+
+    private void writeJson(HttpServletResponse response, ChatResponse chatResponse) throws IOException {
         response.getWriter().write(gson.toJson(chatResponse));
     }
 
@@ -158,6 +162,7 @@ public class ChatServlet extends HttpServlet {
             try {
                 Method method = loginUser.getClass().getMethod(methodName);
                 Object value = method.invoke(loginUser);
+
                 if (value != null) {
                     String name = value.toString().trim();
                     if (!name.isEmpty()) {
@@ -165,6 +170,7 @@ public class ChatServlet extends HttpServlet {
                     }
                 }
             } catch (Exception e) {
+                // ignore
             }
         }
 

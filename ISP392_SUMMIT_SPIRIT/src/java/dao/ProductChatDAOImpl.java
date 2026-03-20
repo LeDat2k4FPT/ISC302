@@ -14,7 +14,7 @@ public class ProductChatDAOImpl implements ProductChatDAO {
 
     @Override
     public List<ChatProductResult> findProductsByName(String keyword) throws Exception {
-        List<ChatProductResult> list = new ArrayList<>();
+        List<ChatProductResult> list = new ArrayList<ChatProductResult>();
 
         if (keyword == null || keyword.trim().isEmpty()) {
             return list;
@@ -37,7 +37,8 @@ public class ProductChatDAOImpl implements ProductChatDAO {
                 + "    FROM ProductImage "
                 + "    GROUP BY ProductID "
                 + ") img ON p.ProductID = img.ProductID "
-                + "WHERE p.Status = ? AND LOWER(p.ProductName) LIKE LOWER(?) "
+                + "WHERE p.Status = ? "
+                + "AND LOWER(REPLACE(REPLACE(p.ProductName, '-', ' '), '  ', ' ')) LIKE LOWER(?) "
                 + "GROUP BY p.ProductID, p.ProductName, p.Description, c.CateName, img.ImageURL "
                 + "ORDER BY p.ProductID ASC";
 
@@ -45,12 +46,12 @@ public class ProductChatDAOImpl implements ProductChatDAO {
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, "Active");
-            ps.setString(2, "%" + keyword.trim() + "%");
+            String normalizedKeyword = keyword.trim().replace("-", " ").replaceAll("\\s+", " ");
+            ps.setString(2, "%" + normalizedKeyword + "%");
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    ChatProductResult item = mapChatProductResult(rs);
-                    list.add(item);
+                    list.add(mapChatProductResult(rs));
                 }
             }
         }
@@ -66,14 +67,16 @@ public class ProductChatDAOImpl implements ProductChatDAO {
 
         String sql = "SELECT TOP 1 p.ProductID "
                 + "FROM Product p "
-                + "WHERE p.Status = ? AND LOWER(p.ProductName) LIKE LOWER(?) "
+                + "WHERE p.Status = ? "
+                + "AND LOWER(REPLACE(REPLACE(p.ProductName, '-', ' '), '  ', ' ')) LIKE LOWER(?) "
                 + "ORDER BY p.ProductID ASC";
 
         try (Connection conn = DBUtils.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, "Active");
-            ps.setString(2, "%" + keyword.trim() + "%");
+            String normalizedKeyword = keyword.trim().replace("-", " ").replaceAll("\\s+", " ");
+            ps.setString(2, "%" + normalizedKeyword + "%");
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -87,7 +90,7 @@ public class ProductChatDAOImpl implements ProductChatDAO {
 
     @Override
     public List<VariantStockResult> getVariantStock(int productId) throws Exception {
-        List<VariantStockResult> list = new ArrayList<>();
+        List<VariantStockResult> list = new ArrayList<VariantStockResult>();
 
         String sql = "SELECT "
                 + "cl.ColorName, "
@@ -122,11 +125,321 @@ public class ProductChatDAOImpl implements ProductChatDAO {
 
     @Override
     public List<ChatProductResult> findProductsByFilters(ChatQuery query) throws Exception {
-        List<ChatProductResult> list = new ArrayList<>();
+        return findProductsByFilters(query, true);
+    }
+
+    @Override
+    public List<ChatProductResult> findAllProductsByFilters(ChatQuery query) throws Exception {
+        return findProductsByFilters(query, false);
+    }
+
+    @Override
+    public ChatProductResult findCheapestProduct() throws Exception {
+        String sql = "SELECT TOP 1 "
+                + "p.ProductID, "
+                + "p.ProductName, "
+                + "p.Description, "
+                + "c.CateName, "
+                + "img.ImageURL, "
+                + "MIN(pv.Price) AS MinPrice, "
+                + "MAX(pv.Price) AS MaxPrice, "
+                + "SUM(ISNULL(pv.Quantity, 0)) AS TotalQuantity "
+                + "FROM Product p "
+                + "JOIN Category c ON p.CateID = c.CateID "
+                + "LEFT JOIN ProductVariant pv ON p.ProductID = pv.ProductID "
+                + "LEFT JOIN ( "
+                + "    SELECT ProductID, MIN(ImageURL) AS ImageURL "
+                + "    FROM ProductImage "
+                + "    GROUP BY ProductID "
+                + ") img ON p.ProductID = img.ProductID "
+                + "WHERE p.Status = ? "
+                + "GROUP BY p.ProductID, p.ProductName, p.Description, c.CateName, img.ImageURL "
+                + "ORDER BY MIN(pv.Price) ASC, p.ProductID ASC";
+
+        try (Connection conn = DBUtils.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, "Active");
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapChatProductResult(rs);
+                }
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public ChatProductResult findMostExpensiveProduct() throws Exception {
+        String sql = "SELECT TOP 1 "
+                + "p.ProductID, "
+                + "p.ProductName, "
+                + "p.Description, "
+                + "c.CateName, "
+                + "img.ImageURL, "
+                + "MIN(pv.Price) AS MinPrice, "
+                + "MAX(pv.Price) AS MaxPrice, "
+                + "SUM(ISNULL(pv.Quantity, 0)) AS TotalQuantity "
+                + "FROM Product p "
+                + "JOIN Category c ON p.CateID = c.CateID "
+                + "LEFT JOIN ProductVariant pv ON p.ProductID = pv.ProductID "
+                + "LEFT JOIN ( "
+                + "    SELECT ProductID, MIN(ImageURL) AS ImageURL "
+                + "    FROM ProductImage "
+                + "    GROUP BY ProductID "
+                + ") img ON p.ProductID = img.ProductID "
+                + "WHERE p.Status = ? "
+                + "GROUP BY p.ProductID, p.ProductName, p.Description, c.CateName, img.ImageURL "
+                + "ORDER BY MAX(pv.Price) DESC, p.ProductID ASC";
+
+        try (Connection conn = DBUtils.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, "Active");
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapChatProductResult(rs);
+                }
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public ChatProductResult findBestSellingProduct() throws Exception {
+        String sql = "SELECT TOP 1 "
+                + "p.ProductID, "
+                + "p.ProductName, "
+                + "p.Description, "
+                + "c.CateName, "
+                + "img.ImageURL, "
+                + "MIN(pv.Price) AS MinPrice, "
+                + "MAX(pv.Price) AS MaxPrice, "
+                + "SUM(ISNULL(od.Quantity, 0)) AS TotalQuantity "
+                + "FROM Product p "
+                + "JOIN Category c ON p.CateID = c.CateID "
+                + "LEFT JOIN ProductVariant pv ON p.ProductID = pv.ProductID "
+                + "LEFT JOIN OrderDetail od ON pv.AttributeID = od.AttributeID "
+                + "LEFT JOIN ( "
+                + "    SELECT ProductID, MIN(ImageURL) AS ImageURL "
+                + "    FROM ProductImage "
+                + "    GROUP BY ProductID "
+                + ") img ON p.ProductID = img.ProductID "
+                + "WHERE p.Status = ? "
+                + "GROUP BY p.ProductID, p.ProductName, p.Description, c.CateName, img.ImageURL "
+                + "ORDER BY SUM(ISNULL(od.Quantity, 0)) DESC, p.ProductID ASC";
+
+        try (Connection conn = DBUtils.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, "Active");
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapChatProductResult(rs);
+                }
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public ChatProductResult findCheapestProductByCategory(String category) throws Exception {
+        if (category == null || category.trim().isEmpty()) {
+            return null;
+        }
+
+        String sql = "SELECT TOP 1 "
+                + "p.ProductID, "
+                + "p.ProductName, "
+                + "p.Description, "
+                + "c.CateName, "
+                + "img.ImageURL, "
+                + "MIN(pv.Price) AS MinPrice, "
+                + "MAX(pv.Price) AS MaxPrice, "
+                + "SUM(ISNULL(pv.Quantity, 0)) AS TotalQuantity "
+                + "FROM Product p "
+                + "JOIN Category c ON p.CateID = c.CateID "
+                + "LEFT JOIN ProductVariant pv ON p.ProductID = pv.ProductID "
+                + "LEFT JOIN ( "
+                + "    SELECT ProductID, MIN(ImageURL) AS ImageURL "
+                + "    FROM ProductImage "
+                + "    GROUP BY ProductID "
+                + ") img ON p.ProductID = img.ProductID "
+                + "WHERE p.Status = ? AND LOWER(c.CateName) = LOWER(?) "
+                + "GROUP BY p.ProductID, p.ProductName, p.Description, c.CateName, img.ImageURL "
+                + "ORDER BY MIN(pv.Price) ASC, p.ProductID ASC";
+
+        try (Connection conn = DBUtils.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, "Active");
+            ps.setString(2, category.trim());
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapChatProductResult(rs);
+                }
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public ChatProductResult findMostExpensiveProductByCategory(String category) throws Exception {
+        if (category == null || category.trim().isEmpty()) {
+            return null;
+        }
+
+        String sql = "SELECT TOP 1 "
+                + "p.ProductID, "
+                + "p.ProductName, "
+                + "p.Description, "
+                + "c.CateName, "
+                + "img.ImageURL, "
+                + "MIN(pv.Price) AS MinPrice, "
+                + "MAX(pv.Price) AS MaxPrice, "
+                + "SUM(ISNULL(pv.Quantity, 0)) AS TotalQuantity "
+                + "FROM Product p "
+                + "JOIN Category c ON p.CateID = c.CateID "
+                + "LEFT JOIN ProductVariant pv ON p.ProductID = pv.ProductID "
+                + "LEFT JOIN ( "
+                + "    SELECT ProductID, MIN(ImageURL) AS ImageURL "
+                + "    FROM ProductImage "
+                + "    GROUP BY ProductID "
+                + ") img ON p.ProductID = img.ProductID "
+                + "WHERE p.Status = ? AND LOWER(c.CateName) = LOWER(?) "
+                + "GROUP BY p.ProductID, p.ProductName, p.Description, c.CateName, img.ImageURL "
+                + "ORDER BY MAX(pv.Price) DESC, p.ProductID ASC";
+
+        try (Connection conn = DBUtils.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, "Active");
+            ps.setString(2, category.trim());
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapChatProductResult(rs);
+                }
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public ChatProductResult findCheapestProductByKeyword(String keyword) throws Exception {
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return null;
+        }
+
+        String normalizedKeyword = keyword.trim().replace("-", " ").replaceAll("\\s+", " ");
+
+        String sql = "SELECT TOP 1 "
+                + "p.ProductID, "
+                + "p.ProductName, "
+                + "p.Description, "
+                + "c.CateName, "
+                + "img.ImageURL, "
+                + "MIN(pv.Price) AS MinPrice, "
+                + "MAX(pv.Price) AS MaxPrice, "
+                + "SUM(ISNULL(pv.Quantity, 0)) AS TotalQuantity "
+                + "FROM Product p "
+                + "JOIN Category c ON p.CateID = c.CateID "
+                + "LEFT JOIN ProductVariant pv ON p.ProductID = pv.ProductID "
+                + "LEFT JOIN ( "
+                + "    SELECT ProductID, MIN(ImageURL) AS ImageURL "
+                + "    FROM ProductImage "
+                + "    GROUP BY ProductID "
+                + ") img ON p.ProductID = img.ProductID "
+                + "WHERE p.Status = ? "
+                + "AND (LOWER(REPLACE(REPLACE(p.ProductName, '-', ' '), '  ', ' ')) LIKE LOWER(?) "
+                + "OR LOWER(p.Description) LIKE LOWER(?)) "
+                + "GROUP BY p.ProductID, p.ProductName, p.Description, c.CateName, img.ImageURL "
+                + "ORDER BY MIN(pv.Price) ASC, p.ProductID ASC";
+
+        try (Connection conn = DBUtils.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, "Active");
+            ps.setString(2, "%" + normalizedKeyword + "%");
+            ps.setString(3, "%" + normalizedKeyword + "%");
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapChatProductResult(rs);
+                }
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public ChatProductResult findMostExpensiveProductByKeyword(String keyword) throws Exception {
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return null;
+        }
+
+        String normalizedKeyword = keyword.trim().replace("-", " ").replaceAll("\\s+", " ");
+
+        String sql = "SELECT TOP 1 "
+                + "p.ProductID, "
+                + "p.ProductName, "
+                + "p.Description, "
+                + "c.CateName, "
+                + "img.ImageURL, "
+                + "MIN(pv.Price) AS MinPrice, "
+                + "MAX(pv.Price) AS MaxPrice, "
+                + "SUM(ISNULL(pv.Quantity, 0)) AS TotalQuantity "
+                + "FROM Product p "
+                + "JOIN Category c ON p.CateID = c.CateID "
+                + "LEFT JOIN ProductVariant pv ON p.ProductID = pv.ProductID "
+                + "LEFT JOIN ( "
+                + "    SELECT ProductID, MIN(ImageURL) AS ImageURL "
+                + "    FROM ProductImage "
+                + "    GROUP BY ProductID "
+                + ") img ON p.ProductID = img.ProductID "
+                + "WHERE p.Status = ? "
+                + "AND (LOWER(REPLACE(REPLACE(p.ProductName, '-', ' '), '  ', ' ')) LIKE LOWER(?) "
+                + "OR LOWER(p.Description) LIKE LOWER(?)) "
+                + "GROUP BY p.ProductID, p.ProductName, p.Description, c.CateName, img.ImageURL "
+                + "ORDER BY MAX(pv.Price) DESC, p.ProductID ASC";
+
+        try (Connection conn = DBUtils.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, "Active");
+            ps.setString(2, "%" + normalizedKeyword + "%");
+            ps.setString(3, "%" + normalizedKeyword + "%");
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapChatProductResult(rs);
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private List<ChatProductResult> findProductsByFilters(ChatQuery query, boolean top3Only) throws Exception {
+        List<ChatProductResult> list = new ArrayList<ChatProductResult>();
 
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT TOP 3 ")
-           .append("p.ProductID, ")
+        sql.append("SELECT ");
+        if (top3Only) {
+            sql.append("TOP 3 ");
+        }
+
+        sql.append("p.ProductID, ")
            .append("p.ProductName, ")
            .append("p.Description, ")
            .append("c.CateName, ")
@@ -146,7 +459,7 @@ public class ProductChatDAOImpl implements ProductChatDAO {
            .append(") img ON p.ProductID = img.ProductID ")
            .append("WHERE p.Status = ? ");
 
-        List<Object> params = new ArrayList<>();
+        List<Object> params = new ArrayList<Object>();
         params.add("Active");
 
         if (query.getCategory() != null && !query.getCategory().trim().isEmpty()) {
@@ -186,19 +499,32 @@ public class ProductChatDAOImpl implements ProductChatDAO {
         try (Connection conn = DBUtils.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql.toString())) {
 
-            for (int i = 0; i < params.size(); i++) {
-                ps.setObject(i + 1, params.get(i));
-            }
+            bindParams(ps, params);
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    ChatProductResult item = mapChatProductResult(rs);
-                    list.add(item);
+                    list.add(mapChatProductResult(rs));
                 }
             }
         }
 
         return list;
+    }
+
+    private void bindParams(PreparedStatement ps, List<Object> params) throws Exception {
+        for (int i = 0; i < params.size(); i++) {
+            Object param = params.get(i);
+
+            if (param instanceof String) {
+                ps.setString(i + 1, (String) param);
+            } else if (param instanceof Double) {
+                ps.setDouble(i + 1, (Double) param);
+            } else if (param instanceof Integer) {
+                ps.setInt(i + 1, (Integer) param);
+            } else {
+                ps.setObject(i + 1, param);
+            }
+        }
     }
 
     private void appendDescriptionKeywordCondition(StringBuilder sql, List<Object> params, ChatQuery query) {
@@ -243,11 +569,19 @@ public class ProductChatDAOImpl implements ProductChatDAO {
             params.add("%waterproof%");
             params.add("%water resistant%");
             params.add("%rain proof%");
-        } else if ("trekking".equals(normalized)) {
+        } else if ("windproof".equals(normalized)) {
             sql.append("AND (")
                .append("LOWER(p.Description) LIKE ? OR ")
                .append("LOWER(p.Description) LIKE ? OR ")
-               .append("LOWER(p.Description) LIKE ? OR ")
+               .append("LOWER(p.ProductName) LIKE ? OR ")
+               .append("LOWER(p.ProductName) LIKE ?")
+               .append(") ");
+            params.add("%windproof%");
+            params.add("%wind resistant%");
+            params.add("%ao gio%");
+            params.add("%jacket%");
+        } else if ("trekking".equals(normalized)) {
+            sql.append("AND (")
                .append("LOWER(p.Description) LIKE ? OR ")
                .append("LOWER(p.Description) LIKE ? OR ")
                .append("LOWER(p.Description) LIKE ? OR ")
@@ -257,9 +591,6 @@ public class ProductChatDAOImpl implements ProductChatDAO {
             params.add("%hiking%");
             params.add("%mountaineering%");
             params.add("%climbing%");
-            params.add("%outdoor%");
-            params.add("%camping%");
-            params.add("%picnic%");
         } else if ("lightweight".equals(normalized)) {
             sql.append("AND (")
                .append("LOWER(p.Description) LIKE ? OR ")
